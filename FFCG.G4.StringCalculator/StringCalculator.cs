@@ -13,31 +13,31 @@ namespace FFCG.G4.StringCalculator
         private List<int> listOfNumbers;
         private int result;
 
-        public int addNumbers(string input)
+        public int AddNumbers(string input)
         {
-            bool isInputNullOrEmpty = checkifInputIsNullOrEmpty(input);
+            bool isInputNullOrEmpty = CheckifInputIsNullOrEmpty(input);
 
             if (isInputNullOrEmpty)
             {
-                result = inputIsNullOrEmptyReturnZero();
+                result = InputIsNullOrEmptyReturnZero();
             }
 
             else
             {
-            string[] numbers = getNumbersFromInput(input);
-            List<int> numbersInList = putNumbersFromInputInList(numbers);
-            result = getSumOfNumbers(numbersInList);
+            string[] numbers = GetNumbersFromInput(input);
+            List<int> numbersInList = PutNumbersFromInputInList(numbers);
+            result = GetSumOfNumbers(numbersInList);
             }
             return result;
         }
 
-        private string[] getNumbersFromInput(string input)
+        private string[] GetNumbersFromInput(string input)
         {
             string[] numbers = Regex.Split(input, @"\D+");
             return numbers;
         }
 
-        private List<int> putNumbersFromInputInList(string[] numbers)
+        private List<int> PutNumbersFromInputInList(string[] numbers)
         {
             listOfNumbers = new List<int>();
             foreach (string number in numbers)
@@ -48,17 +48,17 @@ namespace FFCG.G4.StringCalculator
             return listOfNumbers;
         }
 
-        private int getSumOfNumbers(List<int> numbersInList)
+        private int GetSumOfNumbers(List<int> numbersInList)
         {
             return numbersInList.Sum();
         }
 
-        private bool checkifInputIsNullOrEmpty(string input)
+        private bool CheckifInputIsNullOrEmpty(string input)
         {
             return String.IsNullOrEmpty(input);
         }
 
-        private int inputIsNullOrEmptyReturnZero()
+        private int InputIsNullOrEmptyReturnZero()
         {
             return 0;
         }
