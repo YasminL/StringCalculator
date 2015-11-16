@@ -30,20 +30,20 @@ namespace FFCG.G4.StringCalculator
         }
 
         [Test]
-        public void term_plus_term_equals_sum()
+        public void Term_Plus_Term_Equals_Sum()
         {
             string numbers = "1\n2,3 and 4";
             int expected = 10;
-            var actual = _stringCalculator.addNumbers(numbers);
+            var actual = _stringCalculator.AddNumbers(numbers);
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
-        public void empty_string_equals_the_sum_zero()
+        public void Empty_String_Equals_The_Sum_Zero()
         {
             string numbers = "";
             int expected = 0;
-            var actual = _stringCalculator.addNumbers(numbers);
+            var actual = _stringCalculator.AddNumbers(numbers);
             Assert.AreEqual(expected, actual);
         }
 
