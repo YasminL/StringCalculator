@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 //String Calculator
 //1. Create a simple String calculator with a method int Add(string numbers)
@@ -15,8 +10,10 @@ using NUnit.Framework;
 //7. Allow the Add method to handle new lines between numbers (instead of commas).
 //8. the following input is ok: “1\n2,3” (will equal 6)
 //9. the following input is NOT ok: “1,\n” (not need to prove it - just clarifying) 
+//10. To change a delimiter, the beginning of the string will contain a separate line that looks like this:
+// "//[delimiter]\n[numbers…]” for example “//;\n1;2” should return three where the default delimiter is ‘;’.
 
-namespace FFCG.G4.StringCalculator
+namespace FFCG.G4.StringCalculator.Tests
 {
     [TestFixture]
     class StringCalculatorTests
@@ -34,18 +31,28 @@ namespace FFCG.G4.StringCalculator
         [TestCase(10, "1 and 2, 7")]
         public void Term_Plus_Term_Equals_Sum(int expected, string numbers)
         {
-            var actual = _stringCalculator.PutNumbersInList(numbers);
+            var actual = _stringCalculator.AddNumbers(numbers);
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void Empty_String_Equals_The_Sum_Zero()
         {
-            string numbers = "";
-            int expected = 0;
-            var actual = _stringCalculator.PutNumbersInList(numbers);
+            const string numbers = "";
+            const int expected = 0;
+            var actual = _stringCalculator.AddNumbers(numbers);
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        [TestCase(3,"//;\n1;2")]
+        [TestCase(3, "//A\n1A2")]
+        public void Double_Backslash_At_Beginning_Of_Input_Changes_Deliminator_After_Next_Line_(int expected, string numbersWithDoubleBackslashAtBeginning)
+        {
+            var actual = _stringCalculator.AddNumbers(numbersWithDoubleBackslashAtBeginning);
+            Assert.AreEqual(expected, actual);
+        }
+
 
     }
 }

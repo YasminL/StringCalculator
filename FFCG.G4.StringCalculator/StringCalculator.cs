@@ -10,26 +10,44 @@ namespace FFCG.G4.StringCalculator
 {
     public class StringCalculator
     {
-        private List<int> listOfNumbers;
-        private int result;
+        private int _result;
         private Addition _addition;
+        private char _deliminator;
+        private string[] _numbers;
 
-        public int PutNumbersInList(string input)
+        public int AddNumbers(string input)
         {
             bool isInputNullOrEmpty = CheckifInputIsNullOrEmpty(input);
-
             if (isInputNullOrEmpty)
             {
-                result = InputIsNullOrEmptyReturnZero();
+                _result = InputIsNullOrEmptyReturnZero();
             }
 
             else
             {
-            string[] numbers = GetNumbersFromInput(input);
-            result = AddNumbers(numbers);
+
+            bool isTheDeliminatorChanged = CheckIfBeginningOfInputHasDoubleSlashAndLineSeparator(input);
+            if (isTheDeliminatorChanged)
+                {
+                    _deliminator = GetDeliminator(input);
+                    _numbers = GetNumbersFromInputWithDeliminator(input, _deliminator);
+
+                }
+            else
+            {
+                _numbers = GetNumbersFromInput(input);
+            }
+                _result = AddNumbers(_numbers);
             }
 
-            return result;
+            return _result;
+        }
+
+        private string[] GetNumbersFromInputWithDeliminator(string input, char deliminator)
+        {
+            string numbersAfterNextLine = input.Substring(input.Trim().LastIndexOf("\n" + 1));
+            string[] numbers = numbersAfterNextLine.Split(deliminator);
+            return numbers;
         }
 
         private string[] GetNumbersFromInput(string input)
@@ -46,6 +64,19 @@ namespace FFCG.G4.StringCalculator
         private int InputIsNullOrEmptyReturnZero()
         {
             return 0;
+        }
+
+        private bool CheckIfBeginningOfInputHasDoubleSlashAndLineSeparator(string input)
+        {
+            char deliminator = input[2];
+            bool inputHasDoubleSlashInBeginning = input.Trim().StartsWith("//" + deliminator + "\n");
+            return inputHasDoubleSlashInBeginning;
+        }
+
+        private char GetDeliminator(string input)
+        {
+            char deliminator = input[2];
+            return deliminator;
         }
 
         private int AddNumbers(string[] numbers)
