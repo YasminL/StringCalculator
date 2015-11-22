@@ -12,8 +12,9 @@ namespace FFCG.G4.StringCalculator
     {
         private List<int> listOfNumbers;
         private int result;
+        private Addition _addition;
 
-        public int AddNumbers(string input)
+        public int PutNumbersInList(string input)
         {
             bool isInputNullOrEmpty = CheckifInputIsNullOrEmpty(input);
 
@@ -25,9 +26,9 @@ namespace FFCG.G4.StringCalculator
             else
             {
             string[] numbers = GetNumbersFromInput(input);
-            List<int> numbersInList = PutNumbersFromInputInList(numbers);
-            result = GetSumOfNumbers(numbersInList);
+            result = AddNumbers(numbers);
             }
+
             return result;
         }
 
@@ -35,22 +36,6 @@ namespace FFCG.G4.StringCalculator
         {
             string[] numbers = Regex.Split(input, @"\D+");
             return numbers;
-        }
-
-        private List<int> PutNumbersFromInputInList(string[] numbers)
-        {
-            listOfNumbers = new List<int>();
-            foreach (string number in numbers)
-            {
-                int numberInList = int.Parse(number);
-                listOfNumbers.Add(numberInList);
-            }
-            return listOfNumbers;
-        }
-
-        private int GetSumOfNumbers(List<int> numbersInList)
-        {
-            return numbersInList.Sum();
         }
 
         private bool CheckifInputIsNullOrEmpty(string input)
@@ -61,6 +46,12 @@ namespace FFCG.G4.StringCalculator
         private int InputIsNullOrEmptyReturnZero()
         {
             return 0;
+        }
+
+        private int AddNumbers(string[] numbers)
+        {
+            _addition = new Addition();
+            return _addition.GetSumOfNumbers(numbers);
         }
     }
 }

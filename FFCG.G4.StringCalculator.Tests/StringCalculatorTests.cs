@@ -30,11 +30,11 @@ namespace FFCG.G4.StringCalculator
         }
 
         [Test]
-        public void Term_Plus_Term_Equals_Sum()
+        [TestCase(10, "1\n2,3 and 4")]
+        [TestCase(10, "1 and 2, 7")]
+        public void Term_Plus_Term_Equals_Sum(int expected, string numbers)
         {
-            string numbers = "1\n2,3 and 4";
-            int expected = 10;
-            var actual = _stringCalculator.AddNumbers(numbers);
+            var actual = _stringCalculator.PutNumbersInList(numbers);
             Assert.AreEqual(expected, actual);
         }
 
@@ -43,7 +43,7 @@ namespace FFCG.G4.StringCalculator
         {
             string numbers = "";
             int expected = 0;
-            var actual = _stringCalculator.AddNumbers(numbers);
+            var actual = _stringCalculator.PutNumbersInList(numbers);
             Assert.AreEqual(expected, actual);
         }
 
