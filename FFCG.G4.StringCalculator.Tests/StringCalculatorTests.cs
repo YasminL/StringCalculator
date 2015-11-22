@@ -10,8 +10,11 @@
 //7. Allow the Add method to handle new lines between numbers (instead of commas).
 //8. the following input is ok: “1\n2,3” (will equal 6)
 //9. the following input is NOT ok: “1,\n” (not need to prove it - just clarifying) 
-//10. To change a delimiter, the beginning of the string will contain a separate line that looks like this:
-// "//[delimiter]\n[numbers…]” for example “//;\n1;2” should return three where the default delimiter is ‘;’.
+//10. To change a delimiter, the beginning of the string will contain a separate line that looks like this: "//[delimiter]\n[numbers…]”.
+//    For example “//;\n1;2” should return three where the default delimiter is ‘;’.
+//11. Calling Add with a negative number will throw an exception "negatives not allowed" - and the negative that was passed. 
+//    If there are multiple negatives, show all of them in the exception message.
+
 
 namespace FFCG.G4.StringCalculator.Tests
 {
@@ -47,12 +50,18 @@ namespace FFCG.G4.StringCalculator.Tests
         [Test]
         [TestCase(3,"//;\n1;2")]
         [TestCase(3, "//A\n1A2")]
-        public void Double_Backslash_At_Beginning_Of_Input_Changes_Deliminator_After_Next_Line_(int expected, string numbersWithDoubleBackslashAtBeginning)
+        public void Double_Backslash_At_Beginning_Of_Input_Changes_Deliminator_After_Line_Separator(int expected, string numbersWithDoubleBackslashAtBeginning)
         {
             var actual = _stringCalculator.AddNumbers(numbersWithDoubleBackslashAtBeginning);
             Assert.AreEqual(expected, actual);
         }
 
-
+        [Test]
+        [TestCase("negatives was not allowed: -2", "1 and -2, 7")]
+        public void NegativeInputWillReturnAMessageAndTheNegativeNumber(string expected, string input)
+        {
+            var actual = _stringCalculator.AddNumbers(input);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

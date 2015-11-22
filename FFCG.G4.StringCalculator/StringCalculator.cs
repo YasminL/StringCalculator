@@ -18,6 +18,7 @@ namespace FFCG.G4.StringCalculator
         public int AddNumbers(string input)
         {
             bool isInputNullOrEmpty = CheckifInputIsNullOrEmpty(input);
+            
             if (isInputNullOrEmpty)
             {
                 _result = InputIsNullOrEmptyReturnZero();
@@ -25,29 +26,23 @@ namespace FFCG.G4.StringCalculator
 
             else
             {
+                bool isTheDeliminatorChanged = CheckIfBeginningOfInputHasDoubleSlashAndLineSeparator(input);
 
-            bool isTheDeliminatorChanged = CheckIfBeginningOfInputHasDoubleSlashAndLineSeparator(input);
-            if (isTheDeliminatorChanged)
+                if (isTheDeliminatorChanged)
                 {
                     _deliminator = GetDeliminator(input);
                     _numbers = GetNumbersFromInputWithDeliminator(input, _deliminator);
 
                 }
-            else
-            {
-                _numbers = GetNumbersFromInput(input);
-            }
-                _result = AddNumbers(_numbers);
+
+                else
+                {
+                    _numbers = GetNumbersFromInput(input);
+                    _result = AddNumbers(_numbers);
+                }
             }
 
             return _result;
-        }
-
-        private string[] GetNumbersFromInputWithDeliminator(string input, char deliminator)
-        {
-            string numbersAfterNextLine = input.Substring(input.Trim().LastIndexOf("\n" + 1));
-            string[] numbers = numbersAfterNextLine.Split(deliminator);
-            return numbers;
         }
 
         private string[] GetNumbersFromInput(string input)
@@ -77,6 +72,13 @@ namespace FFCG.G4.StringCalculator
         {
             char deliminator = input[2];
             return deliminator;
+        }
+
+        private string[] GetNumbersFromInputWithDeliminator(string input, char deliminator)
+        {
+            string numbersAfterNextLine = input.Substring(input.Trim().LastIndexOf("\n" + 1));
+            string[] numbers = numbersAfterNextLine.Split(deliminator);
+            return numbers;
         }
 
         private int AddNumbers(string[] numbers)
