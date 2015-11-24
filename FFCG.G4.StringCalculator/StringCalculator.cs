@@ -26,12 +26,15 @@ namespace FFCG.G4.StringCalculator
 
             else
             {
-                bool isTheDeliminatorChanged = CheckIfBeginningOfInputHasDoubleSlashAndLineSeparator(input);
+                bool inputHasNegativeNumbers = CheckIfInputHasNegativeNumbersAndReturnTheNumberIfSo(input);
 
-                if (isTheDeliminatorChanged)
+                bool DeliminatorIsChanged = CheckIfBeginningOfInputHasDoubleSlashAndLineSeparator(input);
+
+                if (DeliminatorIsChanged)
                 {
                     _deliminator = GetDeliminator(input);
                     _numbers = GetNumbersFromInputWithDeliminator(input, _deliminator);
+                    _result = AddNumbers(_numbers);
 
                 }
 
@@ -45,9 +48,10 @@ namespace FFCG.G4.StringCalculator
             return _result;
         }
 
-        private string[] GetNumbersFromInput(string input)
+        private bool CheckIfInputHasNegativeNumbersAndReturnTheNumberIfSo(string input)
         {
-            string[] numbers = Regex.Split(input, @"\D+");
+            int value;
+            bool numbers = int.TryParse(input, out value);
             return numbers;
         }
 
@@ -78,6 +82,12 @@ namespace FFCG.G4.StringCalculator
         {
             string numbersAfterNextLine = input.Substring(input.Trim().LastIndexOf("\n" + 1));
             string[] numbers = numbersAfterNextLine.Split(deliminator);
+            return numbers;
+        }
+
+        private string[] GetNumbersFromInput(string input)
+        {
+            string[] numbers = Regex.Split(input, @"\D+");
             return numbers;
         }
 

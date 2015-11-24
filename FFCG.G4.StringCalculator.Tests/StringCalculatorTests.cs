@@ -31,7 +31,7 @@ namespace FFCG.G4.StringCalculator.Tests
 
         [Test]
         [TestCase(10, "1\n2,3 and 4")]
-        [TestCase(10, "1 and 2, 7")]
+        [TestCase(10, "1 and 2, -7")]
         public void Term_Plus_Term_Equals_Sum(int expected, string numbers)
         {
             var actual = _stringCalculator.AddNumbers(numbers);
@@ -58,6 +58,7 @@ namespace FFCG.G4.StringCalculator.Tests
 
         [Test]
         [TestCase("negatives was not allowed: -2", "1 and -2, 7")]
+        [TestCase("negatives was not allowed: -2", "//;\n0;-2")]
         public void NegativeInputWillReturnAMessageAndTheNegativeNumber(string expected, string input)
         {
             var actual = _stringCalculator.AddNumbers(input);
